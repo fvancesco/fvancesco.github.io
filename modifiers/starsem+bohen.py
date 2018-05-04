@@ -4,6 +4,7 @@ from bokeh.plotting import figure, output_file, show
 from bokeh.models import ColumnDataSource
 from bokeh.models.glyphs import ImageURL
 from collections import Counter
+from bokeh.layouts import gridplot
 
 in_file = "table.tsv"
 lines = open(in_file).read().split("\n")
@@ -20,11 +21,15 @@ for l in lines:
 		pass
 
 #How Gender and Skin Tone Modifiers Affect Emoji Semantics in Twitter
-output_file("emoji-modifier.html", title="*sem 2018 - Emoji Modifiers", mode="cdn")
+output_file("index.html", title="*sem 2018 - Emoji Modifiers", mode="cdn")
 #TOOLS="save,resize,crosshair,pan,wheel_zoom,box_zoom,reset,box_select,lasso_select"
 TOOLS="save,crosshair,pan,wheel_zoom,reset"
-plot = figure(tools=TOOLS, x_range=(-12,12), y_range=(-12,12))
-#plot.toolbar.active_scroll = plot.select_one("wheel_zoom") 
+#plot = figure(tools=TOOLS, x_range=(-12,12), y_range=(-12,12))
+plot = figure(tools=TOOLS, sizing_mode='scale_height', x_range=(-12,12), y_range=(-12,12))
+
+#fig = figure(tools=TOOLS, x_range=(-12,12), y_range=(-12,12))
+#plot = gridplot([[fig]], sizing_mode='stretch_both')
+
 
 #images
 width = 0.55
@@ -54,20 +59,25 @@ source = ColumnDataSource(dict(url = ["./emo/skin-4.png"]*1))
 image1 = ImageURL(url="url", x=0, y=-b, w=width*mul, h=height*mul, anchor="center", dilate=False)
 plot.add_glyph(source, image1)
 
+def mtext(p, x, y, textstr, color, text_font_size="13pt"):
+    p.text(x, y, text=[textstr],
+         text_color = color, text_align="center", text_font_size=text_font_size)
+
+mtext(plot, -a, -1, "male", "red")
+mtext(plot, a, -1, "female", "red")
+mtext(plot, 0, b+1, "light tone", "red")
+mtext(plot, 0, -b-1, "dark tone", "red")
+
+path = "https://raw.githubusercontent.com/fvancesco/fvancesco.github.io/master/modifiers/emo/"
+#path = "emo/"
 #add emojis
 for i in range(len(cord)):
 	l=labels[i]
 	xp = cord[i][0]
 	yp = cord[i][1]		
-	emoPath = './emo/'+ l
-	if os.path.exists(emoPath):
-		#plot.circle(x=xp, y=yp, radius=circledim, line_width=0,fill_alpha=0.45, color=col[clusters[i]], legend="Cluster "+str(clusters[n]+1))
-		url = emoPath #'./emo/'+ l +'.png'
-		source = ColumnDataSource(dict(url = [url]*1))
-		image1 = ImageURL(url="url", x=xp, y=yp, w=width, h=height, anchor="center", dilate=False)
-		plot.add_glyph(source, image1)
-	else:
-		mtext(plot, [xp], [yp], l, col[0])
-
+	emo_path = path+l
+	source = ColumnDataSource(dict(url = [emo_path]*1))
+	image1 = ImageURL(url="url", x=xp, y=yp, w=width, h=height, anchor="center", dilate=False)
+	plot.add_glyph(source, image1)
 
 show(plot)
