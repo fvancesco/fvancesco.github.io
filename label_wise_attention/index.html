@@ -1,26 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 
+ <head>
+       <style>
+      blink, .blink {
+      animation: blinker 1s linear infinite;
+      }
+      @keyframes blinker {  
+      50% { opacity: 0; }
+      }
+    </style>
+ </head>
+
     <body>
         <div class="all" style="font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif; max-width: 700px; margin-left: 10px; margin-right: auto;">
-        
-	    <div>
-            <h2>Interpretable Emoji Prediction via Label-Wise Attention LSTMs 
-<a href="label_wise_attention_emnlp2018.pdf"> (pdf) </a>
-	</h2>
+
+            <h2>Interpretable Emoji Prediction via Label-Wise Attention LSTMs
+  <a href="label_wise_attention_emnlp2018.pdf" style="font-size:17px;"> (pdf)</a>
+        </h2>
 
 <img src="diagram.png" alt="diagram" height="300"/>
 
 <br>
 
-<p style="font-size:17px;">	
+<a href="label_wise_attention_emnlp2018.pdf"> (pdf) </a>
 
+<br>
+
+<span class="blink"> <font color="orange" style="font-size:20px;">Examples!</font> </span>
+
+<p style="font-size:17px;"> 
 <p> 
-  This <a href="single_attention.html">link</a> includes 300 random examples from our corpus, along with gold label (G:) and 15 predictions (P:) of the single attention network. Each word of each tweet is highlighted with the weights alpha. 
+  <a href="single_attention.html"><b>Single Attention</b></a><br/>
+  This link includes 300 random examples from our corpus, along with gold label (G:) and 15 predictions (P:) of the single attention network. Each word of each tweet is highlighted with the weights alpha. 
 </p>
 
 <p> 
-  This <a href="label_wise_attention.html">link</a> includes the same set of tweets, with the emojis from the gold standard (G:) and the predictions (P:) of the label-wise attention network. Moreover, by clicking on the emojis on the top, or on the predictions, it is possible to show the attention weights alpha_l of each label. Note that the words highlighted correspond the emoji displayed on the top left ("Selected")
+  <a href="label_wise_attention.html"><b>Label Wise Attention</b></a><br/>
+  This link includes the same set of tweets, with the emojis from the gold standard (G:) and the predictions (P:) of the label-wise attention network. Moreover, by clicking on the emojis on the top, or on the predictions, it is possible to show the attention weights alpha_l of each label. Note that the words highlighted correspond the emoji displayed on the top left ("Selected")
 </p>
 
 <p>In both files, the words in <font color="red">red font</font> are out of vocabolary words.</p>
